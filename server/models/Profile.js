@@ -1,17 +1,12 @@
 const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    },
     gender : {
         type:String ,
         required : true,
         enum:['Male' , 'Female' , 'Others']
-        
     },
-    date : {
+    dateOfBirth : {
         type:String,
 
     },
