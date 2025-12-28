@@ -21,12 +21,12 @@ const OtpSchema = new mongoose.Schema({
 
 const SendVerificationEmail = async(email , otp)=>{
     try{
-        const mailResponse = await MailSender.SendVerificationEmail(email , "Verrification Email :-" , otp);
+        const mailResponse = await MailSender(email , "Verrification Email" , otp);
         console.log("Email Sent Successfully" , mailResponse);
 
     }catch(e){
         console.error("error occured while sending mail:-",e);
-        process.exit(1);
+        throw e;
     }
 }
 

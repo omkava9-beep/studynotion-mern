@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const SubSectionSchema = new mongoose.Schema({
+    sectionId:{
+        type : mongoose.Schema.Types.ObjectId,
+        ref:"Section"
+    },
     title:{
         type:String,
         required:true

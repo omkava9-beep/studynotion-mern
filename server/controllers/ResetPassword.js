@@ -12,10 +12,10 @@
 //step-4 change password 
 
 
-const { response } = require('express');
 const User = require('../models/User');
 const MailSender = require('../utils/Mailsender');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 
 
 const ResetPasswordToken = async(req , resp)=>{
@@ -32,7 +32,7 @@ const ResetPasswordToken = async(req , resp)=>{
 
         const token = crypto.randomUUID();
 
-        const updatedDetails = User.findByIdAndUpdate({email:email} , {
+        const updatedDetails = await User.findByIdAndUpdate(user._id , {
             token:token ,
             resetPasswordExpires: Date.now()+(1000*5*60)
         }, {new :true});
@@ -73,7 +73,7 @@ const ResetPassword = async(req , resp)=>{
                 message:'Invalid token or token has been expired.'
             })
         }
-        if(user.resetPasswordExpires > Date.now()){
+        if(user.resetPasswordExpires < Date.now()){
             return resp.status(400).json({
                 success:false,
                 message:'Token has been expired.'
@@ -85,13 +85,16 @@ const ResetPassword = async(req , resp)=>{
         user.resetPasswordExpires = undefined;
 
         await user.save();
-
-    }catch(e){
-        console.log(e);
-        return resp.status(500).json({
-            success:false,
-            message:'Something went wrong in resetting password.'
+        
+        return resp.status(200).json({
+            success:true,
+            message:'Password reset successfully.'
         })
+    }catch(e){
+        return resp.status(500).json({
+            message:'Something went wrong while reseing the password',
+            success:false,
+        });
     }
 }
 

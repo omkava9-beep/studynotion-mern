@@ -3,15 +3,13 @@ const User = require('../models/User');
 const otpGenerator = require('generate-otp')
 const bcrypt = require('bcrypt');
 const Profile = require('../models/Profile');
-const Profile = require('../models/Profile');
 const jwt = require('jsonwebtoken');
-const e = require('express');
 require('dotenv').config();
 
 const sendOtp = async(req ,resp)=>{
     try{
         const {email} = req.body;
-        const exist  = await User.findOne(email);
+        const exist  = await User.findOne({email});
         if(exist){
             return resp.status(401).json({
                 success :false,
@@ -20,22 +18,24 @@ const sendOtp = async(req ,resp)=>{
         }
         let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
         console.log("otp generated");
-        const foundOtp = Otp.findOne(otp);
+        let foundOtp = await Otp.findOne({otp});
         while(foundOtp){
-            otp = otp.generate(6 ,otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false }) );
-
+            otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+            foundOtp = await Otp.findOne({otp});
         }
-        const newOtp = await Otp.create(email , otp);
+        const newOtp = await Otp.create({email , otp});
 
         resp.status(200).json({
             success : true,
             message : 'otp sent successfully',
             otp,
-
         })
     }catch(e){
         console.log("error occured while generating and storing otp" ,e);
-        process.exit(1);
+        return resp.status(500).json({
+            success:false,
+            message:"Error generating OTP"
+        })
     }
 }
 
@@ -80,9 +80,9 @@ const SignUp = async(req , resp)=>{
         if(recentOtp.length === 0){
             return resp.status(400).json({
                 success:false,
-                message:"OTP Found",
+                message:"OTP not found",
             })
-        }else if(otp !== recentOtp.otp){
+        }else if(otp !== recentOtp[0].otp){
             return resp.status(400).json({
                 success : false,
                 message:"Invalid OTP."
@@ -112,7 +112,7 @@ const SignUp = async(req , resp)=>{
         })
 
         resp.status(200).json({
-            succes:true,
+            success:true,
             message:'user Created Succesfully',
             user,
 
@@ -122,7 +122,7 @@ const SignUp = async(req , resp)=>{
         console.log("error occured while signUp");
         return resp.status(500).json({
             message:"some error occured",
-            succes:false,
+            success:false,
 
         })
     }
@@ -150,7 +150,7 @@ const Login = async(req, resp)=>{
          }
          //match the password 
          const passInDatabase = Exist.password;
-        if(await bcrypt.compare(passInDatabase , password)){
+        if(await bcrypt.compare(password , passInDatabase)){
                
             const payload = {
                 email , 

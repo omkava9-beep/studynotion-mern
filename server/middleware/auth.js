@@ -41,14 +41,14 @@ const auth = async(req , resp , next)=>{
 
 const isStudent = async(req,resp ,next)=>{
     try{
-        const {user} = req.body;
-        if(!user){
+        const {role} = req.user;
+        if(!role){
             return resp.status(400).json({
                 message:"something went wrong in isStudent",
                 success:false
             })
         }
-        if(user.role !== 'Student'){
+        if(role !== 'Student'){
             return resp.status(403).json({
                 message:"this route is only for Student account",
                 success:false
@@ -67,14 +67,14 @@ const isStudent = async(req,resp ,next)=>{
 
 const isInstructor = async(req,resp ,next)=>{
     try{
-        const {user} = req.body;
-        if(!user){ 
+        const {role} = req.user;
+        if(!role){ 
             return resp.status(400).json({
                 message:"something went wrong in isInstructor",
                 success:false
             })
         }
-        if(user.role !== 'Instructor'){
+        if(role !== 'Instructor'){
             return resp.status(403).json({
                 message:"this route is only for Instructor account",
                 success:false
@@ -93,14 +93,14 @@ const isInstructor = async(req,resp ,next)=>{
 
 const isAdmin = async(req,resp ,next)=>{
     try{
-        const {user} = req.body;
-        if(!user){  
+        const {role} = req.user;
+        if(!role){  
             return resp.status(400).json({
                 message:"something went wrong in isAdmin",
                 success:false
             })
         }   
-        if(user.role !== 'Admin'){
+        if(role !== 'Admin'){
             return resp.status(403).json({
                 message:"this route is only for Admin account",
                 success:false
@@ -110,7 +110,7 @@ const isAdmin = async(req,resp ,next)=>{
     }catch(e){
         console.log(e);
         return resp.status(500).json({
-            message:"Internal server error in isInstructor middleware",
+            message:"Internal server error in isAdmin middleware",
             success:false
         })
     }
