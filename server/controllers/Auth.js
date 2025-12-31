@@ -16,11 +16,11 @@ const sendOtp = async(req ,resp)=>{
                 message : "User Exist with this email already please try to login"
             })
         }
-        let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+        let otp = otpGenerator.generate(6, { upperCaseAlphabets: false , lowerCaseAlphabets:false, specialChars: false });
         console.log("otp generated");
         let foundOtp = await Otp.findOne({otp});
         while(foundOtp){
-            otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
+            otp = otpGenerator.generate(6, { upperCaseAlphabets: false, lowerCaseAlphabets:false, specialChars: false });
             foundOtp = await Otp.findOne({otp});
         }
         const newOtp = await Otp.create({email , otp});

@@ -5,6 +5,7 @@ const Course = require('../models/Course');
 const Tag = require('../models/Catagory');
 const imageUploder = require('../utils/imageUploader');
 const Catagory = require('../models/Catagory');
+const { populate } = require('../models/Section');
 
 
 
@@ -70,7 +71,14 @@ const CreateCourse = async(req , resp)=>{
 
 const getAllCourses = async(req , resp)=>{
     try {
-        const allCourses = await Course.find({}).populate('instructor').populate('catagory').exec();    
+        const allCourses = await Course.find({}).populate({
+            path:'instructor',
+            populate:{
+                path:'courses',
+            }
+        }).populate({
+            path:'catagory',
+        }).exec();    
         return resp.status(200).json({
             message:'All courses fetched successfully',
             success:true,
@@ -79,6 +87,52 @@ const getAllCourses = async(req , resp)=>{
     } catch (error) {
         return resp.status(500).json({
             message:'Error fetching all courses',   
+            success:false,
+            error:error.message,
+        })
+    }
+}
+
+const GetOneCourseAllDetails = async(req,resp)=>{
+    try {
+        const {courseId} = req.body;
+
+        const course = await Course.findById(courseId);
+
+        if(!course){
+            return resp.status(403).json({
+                message:'No course exist with this course id',
+                success:false,
+            })
+        }
+
+        const allCourseDetails = await course.populate({
+            path: 'instructor',
+            populate : {
+                path:'additionalDetails'
+            }
+        }).populate("catagory").populate("ratingAndReviews").populate({
+            path:'courseContent',
+            populate:{
+                path:'subSection',
+            }
+        }).exec();
+
+        if(!allCourseDetails){
+            return resp.status(403).json({
+                message:"course id is not able to finnd the course details something might be wrong int the course id",
+                success:false,
+            })
+        }
+
+        return resp.status(200).json({
+            message:'Course details fetched successfully',
+            success:true,
+            data:allCourseDetails,
+        })
+    } catch (error) {
+        return resp.status(500).json({
+            message:'Error fetching course details',
             success:false,
             error:error.message,
         })

@@ -99,4 +99,26 @@ const GetAllUsersDetails = async(req,resp)=>{
         });
     }
 }
+
+const GetEnrolledCourses = async(req , resp)=>{
+    try {
+        const userId = req.user.id;
+
+        const user = await User.findById(userId);
+
+        if(!user){
+            return resp.status(403).json({
+                success:false,
+                message:"the user does not exist with this id "
+            });
+        }
+
+        
+
+
+
+    } catch (error) {
+        
+    }
+}
 module.exports = {UpdateProfile,DeleteAccount,GetAllUsersDetails};

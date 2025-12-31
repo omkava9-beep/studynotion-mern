@@ -17,7 +17,9 @@ const RatingAndReviewsSchema = new mongoose.Schema({
     },
     course:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Course"
+        ref:"Course",
+        required : true,
+        index : true
     }
 })
 

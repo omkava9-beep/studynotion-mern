@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const Tag = require('../models/Catagory');
 const Catagory = require('../models/Catagory');
-
+const Course = require('../models/Course');
 const CreateCatagory = async(req ,resp) =>{
 
 
@@ -33,17 +33,17 @@ const CreateCatagory = async(req ,resp) =>{
         })
         process.exit(1);        
     }
-    
-
 }
-const GetAllCatagory = async(req,resp) =>{
+const ShowAllCatagory = async(req,resp) =>{
     try {
-        const allCatagory = await Tag.find({}).populate('courses');
+        const allCatagory = await Catagory.find({}).populate('courses').exec();
         return resp.status(200).json({
             data:allCatagory,
             success:true,
             message:"All tags are fetched successfully",
         })
+
+
     } catch (error) {
         resp.status(500).json({
             message:`something went wrong while fetching the tags data:- ${error.message}`,
@@ -52,4 +52,52 @@ const GetAllCatagory = async(req,resp) =>{
     }
 }
 
-module.exports = {CreateCatagory , GetAllCatagory};
+const getCatgoryPageDetails = async(req, resp)  => {
+    try{
+        const {catagoryId} = req.body;
+        const catagoryDetails = await Catagory.findById(catagoryId).populate('courses').exec();
+        if(!catagoryDetails){
+            return resp.status(404).json({
+                success:false,
+                message:"Catagory not found",
+
+            });
+        }
+        if(catagoryDetails.courses.length === 0){
+            return resp.status(200).json({
+                success:true,
+                message:"No courses found for this catagory",
+                data: catagoryDetails,
+            });
+        }
+        const selectedCourses = catagoryDetails.courses;
+        const catagoriesExpectSelectedCatagory = await Catagory.find({_id: {$ne  : catagoryId}}).populate('courses');
+        let differentCourses = [];
+        for(const catagory of catagoriesExpectSelectedCatagory ){
+            differentCourses.push(...catagory.courses);
+        }
+        // //get the top selling courses
+
+        const courses = await Course.find().sort({studentsEnrolled : -1}).limit(10).exec();
+        const topsellings = courses;
+
+        return resp.status(200).json({
+            topsellings : topsellings,
+            selectedCourses : selectedCourses,
+            expectSelected : catagoriesExpectSelectedCatagory,
+            message:'data fetched successfully for details page of catagories',
+            success:true,
+        })
+
+
+        
+    }catch(e){  
+        return resp.status(500).json({
+            success:false, 
+            message: "something went wrong"
+        })
+    }
+
+}
+
+module.exports = {CreateCatagory , GetAllCatagory,getCatgoryPageDetails};
