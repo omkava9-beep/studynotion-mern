@@ -104,7 +104,7 @@ const GetEnrolledCourses = async(req , resp)=>{
     try {
         const userId = req.user.id;
 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('courses').exec();
 
         if(!user){
             return resp.status(403).json({
@@ -113,12 +113,18 @@ const GetEnrolledCourses = async(req , resp)=>{
             });
         }
 
-        
-
-
+        return resp.status(200).json({
+            success:true,
+            message:"Enrolled courses fetched successfully",
+            courses: user.courses
+        });
 
     } catch (error) {
-        
+        return resp.status(500).json({
+            success:false,
+            message:"Something went wrong",
+            error: error.message
+        });
     }
 }
-module.exports = {UpdateProfile,DeleteAccount,GetAllUsersDetails};
+module.exports = {UpdateProfile,DeleteAccount,GetAllUsersDetails,GetEnrolledCourses};

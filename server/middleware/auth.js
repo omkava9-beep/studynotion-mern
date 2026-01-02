@@ -18,7 +18,6 @@ const auth = async(req , resp , next)=>{
         try{
             const decode = jwt.verify(token, process.env.JWT_SECRET);
             console.log(decode);
-
             req.user = decode;
         }catch(e){
             console.log(e);
@@ -116,3 +115,4 @@ const isAdmin = async(req,resp ,next)=>{
     }
 
 }
+module.exports = {auth , isStudent , isInstructor , isAdmin};
