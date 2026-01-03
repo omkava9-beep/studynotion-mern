@@ -138,4 +138,6 @@ const GetOneCourseAllDetails = async(req,resp)=>{
         })
     }
 }
-module.exports = {CreateCourse, getAllCourses};
+
+
+module.exports = {CreateCourse, getAllCourses ,GetOneCourseAllDetails};

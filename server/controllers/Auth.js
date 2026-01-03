@@ -35,13 +35,13 @@ const sendOtp = async(req ,resp)=>{
         return resp.status(500).json({
             success:false,
             message:"Error generating OTP"
-        })
+        });
     }
 }
 
 const SignUp = async(req , resp)=>{
     try{
-        const {firstName , lastName , email , password, confirmPassword , accountType , additionalDetails , contactNumber , otp} = req.body;
+        const {firstName , lastName , email , password, confirmPassword , accountType , contactNumber , otp} = req.body;
         // validate otp
         const validOtp = await Otp.findOne({email , otp});
         if(!validOtp){
@@ -73,7 +73,7 @@ const SignUp = async(req , resp)=>{
             })
         }
 
-        const recentOtp = (await Otp.find({email})).sort({createdAt:-1}).limit(1);
+        const recentOtp = await Otp.find({email}).sort({createdAt:-1}).limit(1);
 
         console.log(recentOtp);
 
@@ -106,7 +106,7 @@ const SignUp = async(req , resp)=>{
             contactNumber,
             password : hashed,
             accountType,
-            additionalDetails:Profile._id,
+            additionalDetails:profile._id,
             image : `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
 
         })
@@ -131,7 +131,7 @@ const SignUp = async(req , resp)=>{
 const Login = async(req, resp)=>{
     try{
         //get data from req body
-        const {email, password,} = req.body;
+        const {email, password} = req.body;
          //validate the data
 
          if(!email || !password){
@@ -196,8 +196,16 @@ const Login = async(req, resp)=>{
 
 const ChangePassword = async(req , resp)=>{
     try{
-        const {oldPassword , newPassword , confirmNewPassword} = req.body;
+        const {oldPassword , newPassword , confirmNewPassword} = req.body || {};
         const userId = req.user.id;
+        
+        if(!oldPassword || !newPassword || !confirmNewPassword){
+            return resp.status(400).json({
+                success:false,
+                message:'All fields are required'
+            })
+        }
+        
         const user = await User.findById(userId);
         if(!user){
             return resp.status(404).json({

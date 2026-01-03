@@ -100,4 +100,4 @@ const getCatgoryPageDetails = async(req, resp)  => {
 
 }
 
-module.exports = {CreateCatagory , GetAllCatagory,getCatgoryPageDetails};
+module.exports = {CreateCatagory , getCatgoryPageDetails , ShowAllCatagory};

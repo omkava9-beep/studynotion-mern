@@ -112,6 +112,7 @@ const getAverageRating = async(req,resp)=>{
         return resp.status(200).json({
             message:'Average rating fetched successfully',
             success:true,
+            averageRating : result[0].averageRating,
         })
         
 

@@ -6,7 +6,7 @@ const User = require('../models/User');
 
 const auth = async(req , resp , next)=>{
     try{
-        const token = req.header('Authorization').replace('Bearer ' , "")|| req.cookies.token || req.body.token;
+        const token = req.header('Authorization')?.replace('Bearer ', "") || req.cookies.token || req.body.token;
          
         if(!token){
             return resp.status(401).json({
@@ -30,6 +30,7 @@ const auth = async(req , resp , next)=>{
         }
         next();
     }catch(e){
+        console.log(e);
         resp.status(401).json({
             success:false,
             message:'error occured while authorization process',

@@ -15,7 +15,7 @@ const OtpSchema = new mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now(),
-        expires : 5*60
+        expires : 5*1000*60, //otp will expire in 5 minutes
     }
 })
 
@@ -30,8 +30,11 @@ const SendVerificationEmail = async(email , otp)=>{
     }
 }
 
-OtpSchema.pre('save' , async(next)=>{
-    await SendVerificationEmail(this.email , this.otp);
-    next();
+OtpSchema.pre('save', async function() {
+    try {
+        await SendVerificationEmail(this.email, this.otp);
+    } catch(error) {
+        throw error;
+    }
 });
 module.exports = mongoose.model('Otp' , OtpSchema);

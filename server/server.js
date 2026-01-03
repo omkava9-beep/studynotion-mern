@@ -1,16 +1,45 @@
 const express = require('express');
-const dbConnect = require('./config/database');
-
 const app = express();
+const dbConnect = require('./config/database');
+const userRoute= require('./routes/User')
+const contactRoute= require('./routes/Contact')
+const paymentRoute= require('./routes/Payment')
+const courseRoute= require('./routes/Course')
+const profileRoute= require('./routes/Profile')
+const ratingRoute= require('./routes/Rating');
+const cloudinaryConnect = require('./config/couldinary');
+const fileUpload = require('express-fileupload');
+const dotenv = require('dotenv');
+const cors = require('cors');
 
-require('dotenv').config();
+dotenv.config();
+
 app.use(express.json());
 app.use(require('cookie-parser')());
-const routes = require('./routes');
-app.use('/api/v1' , routes);
+
+app.use(
+    cors({
+        origin : "http://localhost:3000",
+        methods : ['GET' , 'POST' , 'PUT' , 'DELETE'],
+        credentials : true,
+    })
+)
+dbConnect();
+
+app.use(fileUpload());
+app.use('/api/v1/user' , userRoute);
+app.use('/api/v1/contact' , contactRoute);
+app.use('/api/v1/payment' , paymentRoute);
+app.use('/api/v1/course' , courseRoute);
+app.use('/api/v1/profile' , profileRoute);
+app.use('/api/v1/rating' , ratingRoute);
+
+cloudinaryConnect();
 const port = process.env.PORT || 3000
 app.listen(port, ()=>{
     console.log(`app listening to port number ${port}`);
 })
 
-dbConnect();
+app.get('/' , (req , resp)=>{
+    resp.status(200).send('welcome to e-learning platform server');
+})
