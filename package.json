@@ -1,5 +1,14 @@
 {
+  "name": "studynotion",
+  "version": "1.0.0",
+  "description": "StudyNotion - Full Stack Course Platform",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
   "dependencies": {
+    "concurrently": "^8.2.2",
     "generate-otp": "^1.0.6"
   }
 }
