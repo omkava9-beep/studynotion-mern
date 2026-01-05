@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @theme {
   --font-inter: "Inter", sans-serif;
   --font-edu-sa: "Edu SA Beginner", cursive;
@@ -112,3 +113,4 @@
   --max-w-max-content: 1260px;
   --max-w-max-content-tab: 650px;
 }
+
