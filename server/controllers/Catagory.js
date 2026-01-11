@@ -36,7 +36,7 @@ const CreateCatagory = async(req ,resp) =>{
 }
 const ShowAllCatagory = async(req,resp) =>{
     try {
-        const allCatagory = await Catagory.find({}).populate('courses').exec();
+        const allCatagory = await Catagory.find({},{name:true , description:true});
         return resp.status(200).json({
             data:allCatagory,
             success:true,

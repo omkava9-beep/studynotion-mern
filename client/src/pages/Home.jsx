@@ -21,6 +21,7 @@ import img3 from '../assets/Images/Compare_with_others.svg'
 import instructor from '../assets/Images/Instructor.png'
 import ExploreMore from "../commponents/core/Homepage/Exploremore";
 import ReviewCard from "../commponents/core/Homepage/ReviewCard";
+import Footer from "../commponents/core/Homepage/Footer";
 
 const Home = () => {
   return (
@@ -53,9 +54,9 @@ const Home = () => {
               quizzes, and personalized feedback from instructors.
             </p>
           </div>
-          <div className="flex md:flex-row gap-4">
+          <div className="flex flex-row  items-center gap-4">
             <YellowButton>Learn more</YellowButton>
-            <DarkButton>Book a Demo</DarkButton>
+            <DarkButton >Book a Demo</DarkButton>
           </div>
           <div className="mb-20 rounded-2xl backdrop-blur-lg bg-white/10 px-2 m-3.5">
             <video
@@ -115,10 +116,10 @@ const Home = () => {
           </div>
           {/* part-2 */}
           <div className="w-full bg-pure-greys-5 mt-20">
-            <div className="flex flex-col gap-20">
+            <div className="flex flex-col items-center gap-20">
 
               {/* ===== TEXT ROW (same alignment as part-1) ===== */}
-              <div className="max-w-[1280px] mx-auto px-4 gap-12 items-start md:flex md:flex-row ">
+              <div className="max-w-[1280px] mx-7 px-4 gap-12 items-start md:flex md:flex-row  ">
                 
                 {/* Left */}
                 <div className="lg:w-1/2">
@@ -281,59 +282,61 @@ const Home = () => {
 
         </div>
 
-<div className="bg-richblack-900 px-4 py-10 sm:px-6 lg:px-12 flex flex-col items-center gap-8">
+        <div className="bg-richblack-900 px-4 py-10 sm:px-6 lg:px-12 flex flex-col items-center gap-8">
 
-  {/* Heading */}
-  <h2 className="text-richblack-25 text-2xl sm:text-3xl lg:text-[36px] font-medium text-center">
-    Review from other Learners
-  </h2>
+          {/* Heading */}
+          <h2 className="text-richblack-25 text-2xl sm:text-3xl lg:text-[36px] font-medium text-center">
+            Review from other Learners
+          </h2>
 
-  {/* Cards */}
-  <div className="
-    w-full
-    max-w-7xl
-    sm:grid
-    sm:grid-cols-2
-    lg:grid-cols-4
-    gap-6
-    place-items-center
-  ">
-    <ReviewCard
-      name="Cody Fisher"
-      email="tim.jennings@example.com"
-      avatar="https://i.pravatar.cc/150?u=cody"
-      review="Coordination of activities improved tremendously with Learn codings."
-      rating={4.5}
-    />
-    <ReviewCard
-      name="Cody Fisher"
-      email="tim.jennings@example.com"
-      avatar="https://i.pravatar.cc/150?u=cody"
-      review="Coordination of activities improved tremendously with Learn codings."
-      rating={4.5}
-    />
-    <ReviewCard
-      name="Cody Fisher"
-      email="tim.jennings@example.com"
-      avatar="https://i.pravatar.cc/150?u=cody"
-      review="Coordination of activities improved tremendously with Learn codings."
-      rating={4.5}
-    />
-    <ReviewCard
-      name="Cody Fisher"
-      email="tim.jennings@example.com"
-      avatar="https://i.pravatar.cc/150?u=cody"
-      review="Coordination of activities improved tremendously with Learn codings."
-      rating={4.5}
-    />
-  </div>
+          {/* Cards */}
+          <div className="
+            w-full
+            max-w-7xl
+            sm:grid
+            sm:grid-cols-2
+            lg:grid-cols-4
+            gap-6
+            place-items-center
+          ">
+            <ReviewCard
+              name="Cody Fisher"
+              email="tim.jennings@example.com"
+              avatar="https://i.pravatar.cc/150?u=cody"
+              review="Coordination of activities improved tremendously with Learn codings."
+              rating={4.5}
+            />
+            <ReviewCard
+              name="Cody Fisher"
+              email="tim.jennings@example.com"
+              avatar="https://i.pravatar.cc/150?u=cody"
+              review="Coordination of activities improved tremendously with Learn codings."
+              rating={4.5}
+            />
+            <ReviewCard
+              name="Cody Fisher"
+              email="tim.jennings@example.com"
+              avatar="https://i.pravatar.cc/150?u=cody"
+              review="Coordination of activities improved tremendously with Learn codings."
+              rating={4.5}
+            />
+            <ReviewCard
+              name="Cody Fisher"
+              email="tim.jennings@example.com"
+              avatar="https://i.pravatar.cc/150?u=cody"
+              review="Coordination of activities improved tremendously with Learn codings."
+              rating={4.5}
+            />
+          </div>
 
-</div>
+        </div>
 
           </div>
 
 
         {/* footer */}
+        <Footer></Footer>
+
         
     </div>
   );
