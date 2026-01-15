@@ -39,7 +39,7 @@ const ReviewCard = ({ avatar, name, email, review, rating = 5 }) => {
       "
     >
       {/* ===== User Info & Review ===== */}
-      <div>
+      
         <header className="flex items-center gap-3 mb-3 sm:mb-4">
           <img
             src={avatar}
@@ -56,7 +56,7 @@ const ReviewCard = ({ avatar, name, email, review, rating = 5 }) => {
             <h3 className="text-white font-medium text-sm sm:text-base leading-tight">
               {name}
             </h3>
-            <span className="text-gray-500 text-xs sm:text-sm">
+            <span className="text-gray-500 text-xs sm:text-sm text-wrap">
               {email}
             </span>
           </div>
@@ -65,7 +65,7 @@ const ReviewCard = ({ avatar, name, email, review, rating = 5 }) => {
         <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
           {review}
         </p>
-      </div>
+      
 
       {/* ===== Rating ===== */}
       <footer className="flex items-center gap-2 mt-auto">

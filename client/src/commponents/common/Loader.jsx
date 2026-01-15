@@ -17,7 +17,6 @@ const Loader = () => {
         { opacity: 1, duration: 0.5, ease: "power2.inOut" }
       )
 
-      // Spinning Circles
       gsap.to(circleRef1.current, {
         rotation: 360,
         duration: 2,

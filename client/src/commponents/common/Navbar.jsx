@@ -115,6 +115,15 @@ const Navbar = () => {
             </Link>
           )}
 
+          {/* Profile Image (Always visible if logged in) */}
+          {token !== null && user?.image && (
+            <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+              <div className="h-8 w-8 rounded-full overflow-hidden border border-richblack-700 hover:border-yellow-50 transition-all duration-200">
+                <img src={user?.image} alt="User" className="w-full h-full object-cover" />
+              </div>
+            </Link>
+          )}
+
           {/* Auth / Dashboard (Desktop) */}
           <div className="hidden lg:flex items-center gap-4">
             {token === null ? (
@@ -128,11 +137,6 @@ const Navbar = () => {
               </>
             ) : (
               <div className="flex items-center gap-x-4">
-                {user?.image && (
-                  <div className="h-8 w-8 rounded-full overflow-hidden border border-richblack-700">
-                    <img src={user?.image} alt="User" className="w-full h-full object-cover" />
-                  </div>
-                )}
                 <Link to="/dashboard" className="px-5 py-2 rounded-md bg-richblack-800 text-richblack-50 hover:bg-richblack-700 transition-all">
                   Dashboard
                 </Link>

@@ -10,3 +10,7 @@ export const auth = {
     MAIL_SENDER_API :`${BASE_URL}/api/v1/user/reset-password-token`,
     CHANGE_PASSWORD_API :`${BASE_URL}/api/v1/user/reset-password`
 }
+
+export const contact = {
+    CONTACT_API : `${BASE_URL}/api/v1/contact/contactus`
+}

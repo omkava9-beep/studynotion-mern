@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setToken, setLoading } from '../../redux/slices/authReducer'
 import { setUser } from '../../redux/slices/profileReducer'
@@ -9,7 +9,9 @@ import { apiConnector } from '../../../services/apiConnector'
 import {auth} from '../../../services/apis'
 import Loader from '../common/Loader'
 
+
 import { setSignupData } from '../../redux/slices/authReducer'
+import VerifyEmail from '../../pages/VerifyEmail'
 
 const SignUpForm = () => {
     const navigate = useNavigate();
@@ -49,13 +51,13 @@ const SignUpForm = () => {
             }
 
             toast.success("OTP Sent Successfully");
-            navigate("/verify-email");
+            navigate('/verify-email');
 
         } catch (error) {
             console.log("SENDOTP API ERROR............", error);
             toast.error(error.response?.data?.message || "Could not send OTP");
         }
-        dispatch(setLoading(false));
+        dispatch(setLoading(false)); 
     }
 
     return (

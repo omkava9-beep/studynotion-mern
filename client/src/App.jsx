@@ -11,6 +11,8 @@ import VerifyEmail from './pages/VerifyEmail'
 import ResetPassword from './pages/ResetPasswordPages/ResetPassword'
 import ForgotPassword from './pages/ResetPasswordPages/ForgotPassword'
 import CheckEmail from './pages/ResetPasswordPages/CheckEmail'
+import OpenRoute from './commponents/common/OpenRoute'
+import AboutUs from './pages/AboutUs'
 function App() {
   
   return (
@@ -18,13 +20,27 @@ function App() {
       <Navbar/>
         <Routes>
           <Route path='/' element={<Home/>}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route path='/signup' element={<SignUp />}></Route>
+          <Route 
+          path='/login' 
+          element={
+          <OpenRoute>
+            <Login />
+          </OpenRoute>
+        }
+        />
+        <Route 
+          path='/signup' 
+          element={
+          <OpenRoute>
+            <SignUp />
+          </OpenRoute>
+        }
+        />
           <Route path='/verify-email' element={<VerifyEmail />}></Route>
           <Route path='/reset-password/:token' element={<ResetPassword/>}></Route>
           <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
           <Route path='/check-email' element={<CheckEmail/>}></Route>
-          
+          <Route path='/about-us' element={<AboutUs/>}></Route>
           <Route 
             path='/dashboard' 
             element={

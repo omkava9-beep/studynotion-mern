@@ -43,11 +43,12 @@ const LoginForm = () => {
                 throw new Error(resp.data.message);
             }
             dispatch(setToken(resp.data.token));
-            const userImage = resp.data?.user?.image? resp.data.user.image : 'https://api.dicebear.com/5.x/initials/svg?seed='+resp.data.user.name;
-            dispatch(setUser({name : resp.data.user.name , email : resp.data.user.email , image : userImage}));
+            const userImage = resp.data?.user?.image ? resp.data.user.image : 'https://api.dicebear.com/5.x/initials/svg?seed=' + resp.data.user.firstName;
+            const user = { ...resp.data.user, image: userImage };
+            dispatch(setUser(user));
         
             localStorage.setItem('token' , resp.data.token);
-            localStorage.setItem('user' , JSON.stringify(resp.data.user));
+            localStorage.setItem('user' , JSON.stringify(user));
             toast.success("Login Successful")
             navigate('/dashboard');
             console.log(userImage)
