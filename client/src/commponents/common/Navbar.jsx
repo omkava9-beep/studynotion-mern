@@ -61,7 +61,7 @@ const Navbar = () => {
                 {
                   link.title === "Catalog" ? (
                     <div className="relative flex items-center gap-2 group cursor-pointer h-full py-2 ">
-                      <p className={`${matchRoute("/catalog/:catalogName") ? "text-yellow-25" : "text-richblack-25"}`}>
+                      <p className={`${matchRoute("/catalog/:catalogId") ? "text-yellow-25" : "text-richblack-25"}`}>
                         {link.title}
                       </p>
                       <IoIosArrowDropdown className="text-richblack-25" />
@@ -71,7 +71,7 @@ const Navbar = () => {
                         {
                           subLinks?.length > 0 ? (
                             subLinks.map((subLink, index) => (
-                              <Link to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
+                              <Link to={`/catalog/${subLink._id}`} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
                                 <p>{subLink.name}</p>
                               </Link>
                             ))
@@ -187,7 +187,7 @@ const Navbar = () => {
                           subLinks.map((subLink, idx) => (
                             <Link
                               key={idx}
-                              to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`}
+                              to={`/catalog/${subLink._id}`}
                               onClick={() => {
                                 setIsMenuOpen(false);
                                 setIsCatalogOpen(false);

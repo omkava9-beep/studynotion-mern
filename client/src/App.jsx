@@ -14,6 +14,7 @@ import CheckEmail from './pages/ResetPasswordPages/CheckEmail'
 import OpenRoute from './commponents/common/OpenRoute'
 import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
+import Catalog from './pages/CatalogPage'
 function App() {
   
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path='/check-email' element={<CheckEmail/>}></Route>
           <Route path='/about' element={<AboutUs/>}></Route>
           <Route path='/contact' element={<ContactUs/>}></Route>
+          <Route path='/catalog/:catalogId' element={<Catalog/>}></Route>
           <Route 
             path='/dashboard' 
             element={

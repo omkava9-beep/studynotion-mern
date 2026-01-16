@@ -14,3 +14,7 @@ export const auth = {
 export const contact = {
     CONTACT_API : `${BASE_URL}/api/v1/contact/contactus`
 }
+
+export const catagorypage = {
+    CATAGORY_PAGE_API : `${BASE_URL}/api/v1/course/getcatgorypagedetails/`
+}

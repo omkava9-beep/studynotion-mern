@@ -25,7 +25,7 @@ router.put('/updatesubsection/:subSectionId' , auth , isInstructor , UpdateSubSe
 router.delete('/deletesection' , auth , isInstructor , DeleteSection);
 router.delete('/deletesubsection' , auth , isInstructor , DeleteSubSection);
 
-router.post('/getcatgorypagedetails/:catagoryId' , getCatgoryPageDetails );
+router.get('/getcatgorypagedetails/:catalogId' , getCatgoryPageDetails );
 router.get('/showallcatagories' , ShowAllCatagory );
 
 router.get('/getallcourses' ,getAllCourses  );
