@@ -6,6 +6,7 @@ import { NavbarLinks } from "../../data/navbar-links";
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdSearch } from "react-icons/io";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { VscDashboard, VscSignOut } from "react-icons/vsc";
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { apiConnector } from "../../../services/apiConnector";
 import { catagories, courseEndpoints } from "../../../services/apis";
@@ -24,6 +25,7 @@ const Navbar = () => {
   const [subLinks, setSubLinks] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  
 
   const fetchSublinks = async () => {
     try {
@@ -32,6 +34,9 @@ const Navbar = () => {
     } catch (error) {
       console.log("Could not fetch the category list");
     }
+  }
+  const profileHandler = () => {
+    console.log('profileHandler')
   }
 
   // Search States
@@ -99,31 +104,39 @@ const Navbar = () => {
               <li key={index} className="h-full flex items-center">
                 {
                   link.title === "Catalog" ? (
-                    <div className="relative flex items-center gap-2 group cursor-pointer h-full py-2 ">
-                      <p className={`${matchRoute("/catalog/:catalogId") ? "text-yellow-25" : "text-richblack-25"}`}>
+                    <div className="relative flex items-center gap-2 group cursor-pointer h-full py-2">
+                       <p className={`transition-all duration-200 ${matchRoute("/catalog/:catalogId") ? "text-yellow-25" : "text-richblack-25 group-hover:text-richblack-5"}`}>
                         {link.title}
                       </p>
-                      <IoIosArrowDropdown className="text-richblack-25" />
+                      <IoIosArrowDropdown className={`text-richblack-25 transition-transform duration-200 group-hover:rotate-180 group-hover:text-richblack-5 ${matchRoute("/catalog/:catalogId") ? "text-yellow-25" : ""}`} />
 
-                      <div className="invisible absolute left-[50%] top-[100%] z-[1000] flex w-[200px] translate-x-[-50%] translate-y-[1em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-[0.5em] group-hover:opacity-100 lg:w-[300px]">
+                      <div className="invisible absolute left-[50%] top-[140%] z-[1000] flex w-[200px] translate-x-[-50%] translate-y-[1em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-[0.5em] group-hover:opacity-100 lg:w-[300px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-richblack-700">
                         <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
                         {
                           subLinks?.length > 0 ? (
                             subLinks.map((subLink, index) => (
-                              <Link to={`/catalog/${subLink._id}`} key={index} className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50">
-                                <p>{subLink.name}</p>
+                              <Link 
+                                to={`/catalog/${subLink._id}`} 
+                                key={index} 
+                                className="rounded-lg bg-transparent py-3 pl-4 hover:bg-richblack-50 transition-colors"
+                              >
+                                <p className="font-medium">{subLink.name}</p>
                               </Link>
                             ))
-                          ) : (<div className="text-center">No Categories Found</div>)
+                          ) : (<div className="text-center py-2 text-richblack-500 italic">No Categories Found</div>)
                         }
                       </div>
-
+                      
+                      {/* Active Indicator for Catalog */}
+                      <span className={`absolute -bottom-1 left-0 h-[2px] bg-yellow-25 transition-all duration-300 ${matchRoute("/catalog/:catalogId") ? "w-full" : "w-0 group-hover:w-full"}`}></span>
                     </div>
                   ) : (
-                    <Link to={link?.path}>
-                      <p className={`${matchRoute(link?.path) ? "text-yellow-25" : "text-richblack-25"}`}>
+                    <Link to={link?.path} className="relative group">
+                      <p className={`transition-all duration-200 ${matchRoute(link?.path) ? "text-yellow-25" : "text-richblack-25 group-hover:text-richblack-5"}`}>
                         {link.title}
                       </p>
+                      {/* Hover/Active Indicator */}
+                      <span className={`absolute -bottom-1 left-0 h-[2px] bg-yellow-25 transition-all duration-300 ${matchRoute(link?.path) ? "w-full" : "w-0 group-hover:w-full"}`}></span>
                     </Link>
                   )
                 }
@@ -157,11 +170,36 @@ const Navbar = () => {
 
           {/* Profile Image (Always visible if logged in) */}
           {token !== null && user?.image && (
-            <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-              <div className="h-8 w-8 rounded-full overflow-hidden border border-richblack-700 hover:border-yellow-50 transition-all duration-200">
+            <div className="relative group cursor-pointer lg:block hidden">
+              <div className="h-8 w-8 rounded-full overflow-hidden border border-richblack-700 group-hover:border-yellow-50 transition-all duration-200">
                 <img src={user?.image} alt="User" className="w-full h-full object-cover" />
               </div>
-            </Link>
+
+              {/* Dropdown Menu */}
+              <div className="invisible absolute top-[120%] right-0 z-[1000] flex flex-col rounded-md border border-richblack-700 bg-richblack-800 p-1 text-richblack-100 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 min-w-[150px] shadow-2xl">
+                <div className="absolute -top-1.5 right-3 h-4 w-4 rotate-45 border-t border-l border-richblack-700 bg-richblack-800"></div>
+                <Link
+                  to="/dashboard"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex w-full gap-x-2 items-center py-2 px-3 hover:bg-richblack-700 hover:text-richblack-25 rounded-sm transition-all"
+                >
+                  <VscDashboard className="text-lg" />
+                  <span>Dashboard</span>
+                </Link>
+                <div 
+                  onClick={() => {
+                    dispatch(deleteToken());
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    navigate("/login");
+                  }}
+                  className="flex w-full gap-x-2 items-center py-2 px-3 hover:bg-richblack-700 hover:text-richblack-25 rounded-sm transition-all text-pink-200"
+                >
+                  <VscSignOut className="text-lg" />
+                  <span>Logout</span>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Auth / Dashboard (Desktop) */}
@@ -175,24 +213,7 @@ const Navbar = () => {
                   Sign Up
                 </Link>
               </>
-            ) : (
-              <div className="flex items-center gap-x-4">
-                <Link to="/dashboard" className="px-5 py-2 rounded-md bg-richblack-800 text-richblack-50 hover:bg-richblack-700 transition-all">
-                  Dashboard
-                </Link>
-                <button
-                  onClick={() => {
-                    dispatch(deleteToken());
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                    navigate("/login");
-                  }}
-                  className="px-5 py-2 rounded-md bg-richblack-800 text-richblack-50 hover:bg-richblack-700 transition-all"
-                >
-                  Logout
-                </button>
-              </div>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -270,22 +291,22 @@ const Navbar = () => {
 
       {/* ===== Mobile Menu Overlay ===== */}
       {isMenuOpen && (
-        <div className="lg:hidden absolute top-[100%] left-0 w-full bg-richblack-900/98 backdrop-blur-xl border-b border-richblack-700 py-6 px-4 shadow-2xl animate-in slide-in-from-top duration-300">
-          <ul className="flex flex-col gap-y-4">
+        <div className="lg:hidden absolute top-[100%] left-0 w-full bg-richblack-900/98 backdrop-blur-xl border-b border-richblack-700 py-8 px-6 shadow-2xl animate-in slide-in-from-top duration-300">
+          <ul className="flex flex-col gap-y-6">
             {NavbarLinks.map((link, index) => (
-              <li key={index} className="border-b border-richblack-800 pb-2">
+              <li key={index} className="border-b border-richblack-800 pb-4 last:border-0">
                 {link.title === "Catalog" ? (
                   <div className="flex flex-col gap-2">
                     <div 
-                      className="flex items-center justify-between cursor-pointer"
+                      className="flex items-center justify-between cursor-pointer group"
                       onClick={() => setIsCatalogOpen(!isCatalogOpen)}
                     >
-                      <p className="text-richblack-50 font-medium">Catalog</p>
-                      <IoIosArrowDropdown className={`text-richblack-50 transition-transform duration-200 ${isCatalogOpen ? "rotate-180" : ""}`} />
+                      <p className={`font-semibold text-lg transition-colors ${matchRoute("/catalog/:catalogId") ? "text-yellow-25" : "text-richblack-50 group-hover:text-yellow-25"}`}>Catalog</p>
+                      <IoIosArrowDropdown className={`text-xl transition-transform duration-300 ${matchRoute("/catalog/:catalogId") ? "text-yellow-25" : "text-richblack-50"} ${isCatalogOpen ? "rotate-180 text-yellow-25" : ""}`} />
                     </div>
                     
                     {isCatalogOpen && (
-                      <div className="pl-4 flex flex-col gap-3 pt-3 pb-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="pl-4 flex flex-col gap-4 pt-4 pb-2 animate-in fade-in slide-in-from-top-4 duration-300 border-l border-richblack-700 ml-1">
                         {subLinks?.length > 0 ? (
                           subLinks.map((subLink, idx) => (
                             <Link
@@ -295,7 +316,7 @@ const Navbar = () => {
                                 setIsMenuOpen(false);
                                 setIsCatalogOpen(false);
                               }}
-                              className="text-richblack-200 hover:text-yellow-25 text-sm"
+                              className="text-richblack-200 hover:text-yellow-50 text-base font-medium transition-colors"
                             >
                               {subLink.name}
                             </Link>
@@ -310,7 +331,7 @@ const Navbar = () => {
                   <Link
                     to={link?.path}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`${matchRoute(link?.path) ? "text-yellow-25" : "text-richblack-25"} font-medium block w-full`}
+                    className={`${matchRoute(link?.path) ? "text-yellow-25" : "text-richblack-50 hover:text-yellow-25"} font-semibold text-lg block w-full transition-colors`}
                   >
                     {link.title}
                   </Link>
@@ -319,20 +340,20 @@ const Navbar = () => {
             ))}
 
             {/* Mobile Auth Actions */}
-            <div className="flex flex-col gap-4 mt-6">
+            <div className="flex flex-col gap-4 mt-4 pt-6 border-t border-richblack-800">
               {token === null ? (
                 <>
                   <Link
                     to="/login"
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-full py-3 text-center rounded-md border border-richblack-600 text-richblack-100 bg-richblack-800 hover:bg-richblack-700"
+                    className="w-full py-3 text-center rounded-lg border border-richblack-600 text-richblack-100 bg-richblack-800 hover:bg-richblack-700 transition-all font-medium"
                   >
                     Login
                   </Link>
                   <Link
                     to="/signup"
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-full py-3 text-center rounded-md bg-yellow-50 text-richblack-900 font-bold hover:bg-yellow-100"
+                    className="w-full py-3 text-center rounded-lg bg-yellow-50 text-richblack-900 font-bold hover:bg-yellow-100 transition-all shadow-md active:scale-95"
                   >
                     Sign Up
                   </Link>
@@ -342,7 +363,7 @@ const Navbar = () => {
                   <Link
                     to="/dashboard"
                     onClick={() => setIsMenuOpen(false)}
-                    className="w-full py-3 text-center rounded-md bg-richblack-800 text-richblack-50 border border-richblack-700"
+                    className="w-full py-3 text-center rounded-lg bg-richblack-800 text-richblack-50 border border-richblack-700 font-medium hover:bg-richblack-700 transition-all"
                   >
                     Dashboard
                   </Link>
@@ -354,7 +375,7 @@ const Navbar = () => {
                       setIsMenuOpen(false);
                       navigate("/login");
                     }}
-                    className="w-full py-3 text-center rounded-md bg-pink-700 text-white font-medium hover:bg-pink-600"
+                    className="w-full py-3 text-center rounded-lg bg-pink-700/20 text-pink-400 border border-pink-700/50 font-bold hover:bg-pink-700 hover:text-white transition-all active:scale-95 mt-2"
                   >
                     Logout
                   </button>

@@ -52,7 +52,12 @@ function App() {
                 <Dashboard />
               </PrivateRoute>
             } 
-          />
+          >
+            {/* Nested Routes */}
+            <Route path="my-profile" element={<div>My Profile Component Placeholder</div>} />
+            <Route path="settings" element={<div>Settings Component Placeholder</div>} />
+            {/* Add more nested routes as needed based on sidebar-links.js */}
+          </Route>
           
         </Routes>
     </div>
