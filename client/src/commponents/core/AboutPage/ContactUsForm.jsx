@@ -23,14 +23,27 @@ const ContactUsForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if(formData.phoneNo.length <10 || formData.phoneNo.length > 10){
+            toast.error("Phone number should be of 10 digits");
+            return;
+        }
         try {
             const response = await apiConnector('POST' , contact.CONTACT_API , formData);
             if(response.status === 200){
                 toast.success(response.data.message);
-            }
+                setFormData({
+                    firstname: "",
+                    lastname: "",
+                    email: "",
+                    message: "",
+                    phoneNo: "",
+                    countryCode: "+91"
+                })
+            } 
             else{
                 toast.error(response.data.message);
             }
+            
             
         } catch (error) {
             console.log("CONTACT API ERROR:", error);

@@ -14,7 +14,11 @@ import CheckEmail from './pages/ResetPasswordPages/CheckEmail'
 import OpenRoute from './commponents/common/OpenRoute'
 import AboutUs from './pages/AboutUs'
 import ContactUs from './pages/ContactUs'
+
 import Catalog from './pages/CatalogPage'
+import MyProfile from './commponents/dashboard/MyProfile'
+import EnrolledCourses from './commponents/dashboard/EnrolledCourses'
+import Settings from './commponents/dashboard/Settings'
 function App() {
   
   return (
@@ -54,8 +58,12 @@ function App() {
             } 
           >
             {/* Nested Routes */}
-            <Route path="my-profile" element={<div>My Profile Component Placeholder</div>} />
-            <Route path="settings" element={<div>Settings Component Placeholder</div>} />
+            <Route index element={<MyProfile/>}></Route>
+
+            <Route path="/dashboard/settings" element={<Settings/>} />
+            <Route path="/dashboard/cart" element={<div>Cart Component Placeholder</div>} />
+            <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses/>}></Route>
+            <Route path="/dashboard/purchase-history" element={<div>Purchase History Component Placeholder</div>} />
             {/* Add more nested routes as needed based on sidebar-links.js */}
           </Route>
           

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 
 import { sidebarLinks } from '../../data/dashboard-links'
-import { VscSignOut } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import SidebarLink from './SidebarLink'
 import { useNavigate } from 'react-router-dom'
 import { VscSettingsGear, VscSignOut as VscSignOutIcon } from "react-icons/vsc"
 import { deleteToken } from '../../redux/slices/authReducer'
+import { ACCOUNT_TYPE } from '../../utils/constants'
 
 const Sidebar = () => {
 
@@ -43,7 +43,7 @@ const Sidebar = () => {
 
         <div className='flex flex-col'>
             <SidebarLink 
-                link={{name:"Settings", path:"dashboard/settings"}}
+                link={{name:"Settings", path:"settings"}}
                 iconName="VscSettingsGear"
             />
 
@@ -76,7 +76,7 @@ const Sidebar = () => {
         {/* Confirmation Modal should be rendered here if it exists */}
         {/* Placeholder for now as I need to find/create a Modal component */}
         {confirmationModal && (
-            <div className='fixed inset-0 z-1000 mt-0! grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm'>
+            <div className='fixed inset-0  mt-0! grid place-items-center overflow-auto bg-richblack-900 bg-opacity-30 '>
                 <div className='w-11/12 max-w-[350px] rounded-lg border border-richblack-400 bg-richblack-800 p-6'>
                     <p className='text-2xl font-semibold text-richblack-5'>{confirmationModal.text1}</p>
                     <p className='mt-3 mb-5 leading-6 text-richblack-200'>{confirmationModal.text2}</p>

@@ -82,11 +82,11 @@ const Navbar = () => {
   }
 
   return (
-    <div className="sticky top-0 z-50 w-full backdrop-blur-md bg-richblack-900/80 border-b border-richblack-700 transition-all duration-200">
+    <div className="sticky top-0 z-50 w-full h-14 backdrop-blur-md bg-richblack-900/80 border-b border-richblack-700 transition-all duration-200">
       
 
 
-      <div className={`max-w-[1280px] mx-auto px-4 sm:px-6 py-3 flex items-center justify-between transition-all duration-200 ${showSearch ? "blur-sm opacity-50 select-none pointer-events-none" : ""}`}>
+      <div className={`max-w-[1280px] mx-auto px-4 sm:px-6 h-full flex items-center justify-between transition-all duration-200 ${showSearch ? "blur-sm opacity-50 select-none pointer-events-none" : ""}`}>
 
         {/* ===== Logo ===== */}
         <Link to="/" className="flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
@@ -366,6 +366,7 @@ const Navbar = () => {
                     className="w-full py-3 text-center rounded-lg bg-richblack-800 text-richblack-50 border border-richblack-700 font-medium hover:bg-richblack-700 transition-all"
                   >
                     Dashboard
+                    
                   </Link>
                   <button
                     onClick={() => {

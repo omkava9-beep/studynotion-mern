@@ -23,3 +23,11 @@ export const contact = {
 export const catagorypage = {
     CATAGORY_PAGE_API: `${BASE_URL}/api/v1/course/getcatgorypagedetails/`
 }
+
+export const profile = {
+    UPDATE_PROFILE_API: `${BASE_URL}/api/v1/profile/updateprofile`,
+    DELETE_ACCOUNT_API: `${BASE_URL}/api/v1/profile/deleteaccount`,
+    GET_ALL_USERS_API: `${BASE_URL}/api/v1/profile/getallusers`,
+    GET_ENROLLED_COURSES_API: `${BASE_URL}/api/v1/profile/getenrolledcourses`,
+    UPLOAD_PROFILE_PICTURE_API: `${BASE_URL}/api/v1/profile/uploadprofilepicture`,
+}

@@ -49,6 +49,7 @@ const LoginForm = () => {
         
             localStorage.setItem('token' , resp.data.token);
             localStorage.setItem('user' , JSON.stringify(user));
+            console.log(JSON.stringify(user));
             toast.success("Login Successful")
             navigate('/dashboard');
             console.log(userImage)
