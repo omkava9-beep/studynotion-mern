@@ -1,6 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ChangeProfilePicture from './settings/ChangeProfilePicture'
+import EditProfile from './settings/EditProfile'
+import UpdatePassword from './settings/UpdatePassword'
+import DeleteAccount from './settings/DeleteAccount'
 
 const Settings = () => {
     const {user} = useSelector((state)=>state.profile);
@@ -14,11 +17,14 @@ const Settings = () => {
         {/* Change Profile Picture */}
         <ChangeProfilePicture />
 
-        {/* Other Settings Sections (Placeholder for now) */}
-        <div className='flex flex-col gap-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12'>
-            <h2 className='text-lg font-semibold text-richblack-5'>Personal Information</h2>
-            <p className='text-richblack-400'>Currently under development...</p>
-        </div>
+        {/* Edit Profile */}
+        <EditProfile />
+
+        {/* Update Password */}
+        <UpdatePassword />
+
+        {/* Delete Account */}
+        <DeleteAccount />
     </div>
   )
 }

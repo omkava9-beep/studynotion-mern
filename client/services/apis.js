@@ -31,3 +31,10 @@ export const profile = {
     GET_ENROLLED_COURSES_API: `${BASE_URL}/api/v1/profile/getenrolledcourses`,
     UPLOAD_PROFILE_PICTURE_API: `${BASE_URL}/api/v1/profile/uploadprofilepicture`,
 }
+
+export const settingsEndpoints = {
+    UPDATE_DISPLAY_PICTURE_API: `${BASE_URL}/api/v1/profile/uploadprofilepicture`,
+    UPDATE_PROFILE_API: `${BASE_URL}/api/v1/profile/updateprofile`,
+    CHANGE_PASSWORD_API: `${BASE_URL}/api/v1/user/changepassword`,
+    DELETE_PROFILE_API: `${BASE_URL}/api/v1/profile/deleteaccount`,
+}

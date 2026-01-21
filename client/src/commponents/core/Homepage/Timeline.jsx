@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Timeline = ({ logo, heading, subheading }) => {
+  const container = useRef();
+
+  useGSAP(
+    () => {
+      gsap.from(container.current, {
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 90%",
+        },
+      });
+    },
+    { scope: container }
+  );
+
   return (
-    <div className="flex items-start gap-3 sm:gap-4 w-full">
+    <div className="flex items-start gap-3 sm:gap-4 w-full" ref={container}>
       
       {/* Icon */}
       <div className="rounded-full bg-white shadow-lg 

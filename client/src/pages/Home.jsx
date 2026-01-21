@@ -1,4 +1,7 @@
 import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
 import HighlightedText from "../commponents/core/Homepage/HighlightedText";
 import { FaArrowRight } from "react-icons/fa";
@@ -23,13 +26,46 @@ import ExploreMore from "../commponents/core/Homepage/ExploreMore";
 import ReviewCard from "../commponents/core/Homepage/ReviewCard";
 import Footer from "../commponents/core/Homepage/Footer";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Home = () => {
+  const container = useRef();
+
+  useGSAP(
+    () => {
+      // Hero section animation
+      const tl = gsap.timeline();
+      tl.from(".hero-element", {
+        y: 30,
+        opacity: 0,
+        duration: 2,
+        stagger: 0.2,
+        ease: "power3.out",
+      });
+
+      // Video banner scroll animation
+      gsap.from(".video-banner", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".video-banner",
+          start: "top 85%",
+          end: "top 50%",
+          scrub: 1,
+        },
+      });
+    },
+    { scope: container }
+  );
+
   return (
-    <div className="w-full">
+    <div className="w-full" ref={container}>
       <div className="flex flex-col w-full max-w-[1280px] mx-auto font-inter ">
         <div className="flex flex-col items-center gap-12 px-1.5  ">
 
-          <Link to="/signup">
+          <Link to="/signup" className="hero-element">
             <div
               className="mt-12 flex items-center gap-2 px-6 h-11
               text-richblack-200 bg-richblack-800 rounded-full
@@ -42,7 +78,7 @@ const Home = () => {
             </div>
           </Link>
           {/* Heading */}
-          <div className="flex flex-col items-center gap-6 max-w-[850px] text-center">
+          <div className="flex flex-col items-center gap-6 max-w-[850px] text-center hero-element">
             <h1 className="gap-2">
               <span className="text-2xl sm:text-3xl lg:text-4xl font-medium ">Empower Your Future with</span>
               <HighlightedText text=" Coding Skills" />
@@ -54,11 +90,11 @@ const Home = () => {
               quizzes, and personalized feedback from instructors.
             </p>
           </div>
-          <div className="flex flex-row  items-center gap-4">
+          <div className="flex flex-row  items-center gap-4 hero-element">
             <YellowButton>Learn more</YellowButton>
             <DarkButton >Book a Demo</DarkButton>
           </div>
-          <div className="mb-20 rounded-2xl backdrop-blur-lg bg-white/10 px-2 m-3.5">
+          <div className="mb-20 rounded-2xl backdrop-blur-lg bg-white/10 px-2 m-3.5 video-banner">
             <video
               src={Banner}
               muted

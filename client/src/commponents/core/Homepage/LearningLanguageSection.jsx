@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useRef } from "react";
 import HighlightedText from "./HighlightedText";
 import YellowButton from "./YellowButton";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const LearningLanguageSection = ({ img1, img2, img3 }) => {
+  const container = useRef();
+
+  useGSAP(
+    () => {
+      gsap.from(".language-img", {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 80%",
+        },
+      });
+    },
+    { scope: container }
+  );
+
   return (
-    <div className="flex flex-col items-center bg-pure-greys-5 gap-10 sm:gap-[52px]">
+    <div className="flex flex-col items-center bg-pure-greys-5 gap-10 sm:gap-[52px]" ref={container}>
 
       {/* ===== Heading ===== */}
       <div className="w-11/12 text-richblack-900 font-inter flex flex-col items-center mt-16 sm:mt-28 text-center">
@@ -30,6 +54,7 @@ const LearningLanguageSection = ({ img1, img2, img3 }) => {
             absolute
             left-0 sm:left-16 lg:left-32 xl:left-44
             w-32 sm:w-44 md:w-56 lg:w-64 xl:w-72 2xl:w-80
+            language-img
           "
         />
 
@@ -39,7 +64,8 @@ const LearningLanguageSection = ({ img1, img2, img3 }) => {
           alt=""
           className="
             relative z-10
-            w-40 sm:w-56 md:w-72 lg:w-80 xl:w-96 2xl:w-[28rem]
+            w-40 sm:w-56 md:w-72 lg:w-80 xl:w-96 2xl:w-md
+            language-img
           "
         />
 
@@ -51,6 +77,7 @@ const LearningLanguageSection = ({ img1, img2, img3 }) => {
             absolute
             right-0 sm:right-16 lg:right-32 xl:right-44
             w-32 sm:w-44 md:w-56 lg:w-64 xl:w-72 2xl:w-80
+            language-img
           "
         />
 

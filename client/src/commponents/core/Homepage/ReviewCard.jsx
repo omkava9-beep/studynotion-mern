@@ -35,7 +35,8 @@ const ReviewCard = ({ avatar, name, email, review, rating = 5 }) => {
         shadow-sm
         m-4
         hover:border-gray-700
-        transition-colors
+        hover:scale-[1.02]
+        transition-all duration-300
       "
     >
       {/* ===== User Info & Review ===== */}

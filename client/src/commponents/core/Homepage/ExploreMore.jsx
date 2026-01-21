@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { HomePageExplore } from "../../../data/homepage-explore";
 import CourseCard from "./CourseCard";
+import { useGSAP } from "@gsap/react";
 
 const tabsName = [
   "Free",

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useRef } from "react";
 import YellowButton from "./YellowButton";
 import DarkButton from "./DarkButton";
 import HighlightedText from "./HighlightedText";
 import { TypeAnimation } from "react-type-animation";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const CodeBlocks = ({
   reverse = false,
@@ -16,15 +21,45 @@ const CodeBlocks = ({
   backgroundGradient = "bg-gradient-to-br from-[#8A2BE2] via-[#FFA500] to-[#F8F8FF]",
   codeColor = "text-yellow-100",
 }) => {
+  const container = useRef();
+
+  useGSAP(
+    () => {
+      gsap.from(".code-blocks-text", {
+        x: reverse ? 100 : -100,
+        opacity: 0,
+        duration: 3,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 80%",
+        },
+      });
+
+      gsap.from(".code-blocks-preview", {
+        x: reverse ? -100 : 100,
+        opacity: 0,
+        duration: 3,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top 80%",
+        },
+      });
+    },
+    { scope: container }
+  );
+
   return (
     <div
+      ref={container}
       className={`relative sm:flex sm:flex-row
       ${reverse ? "sm:flex-row-reverse" : "sm:flex-row"}
       gap-12 items-center justify-between
       w-full p-4 sm:px-8 lg:px-12`}
     >
       {/* LEFT SECTION */}
-      <div className="flex flex-col gap-6 w-full lg:w-1/2">
+      <div className="flex flex-col gap-6 w-full lg:w-1/2 code-blocks-text">
         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold leading-tight">
           {heading1}
           <HighlightedText text={highlightedText} />
@@ -42,7 +77,7 @@ const CodeBlocks = ({
       </div>
 
       {/* RIGHT SECTION */}
-      <div className="relative w-full lg:w-1/2 flex justify-center overflow-hidden">
+      <div className="relative w-full lg:w-1/2 flex justify-center overflow-hidden code-blocks-preview">
         <div
           className={`absolute top-24 sm:top-1/4
           w-[240px] sm:w-[360px]
